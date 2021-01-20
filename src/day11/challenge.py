@@ -329,10 +329,11 @@ def part_two( input ) :
 
 
 def main() :
-    a_file  = open( "src/day11/puzzleInput.txt" )
+    a_file   = open( "src/day11/puzzleInput.txt" )
     input    = a_file.read().splitlines()
     input    = [split( val ) for val in input]
     inputTwo = copy.deepcopy( input )
+    a_file.close()
 
     part_one( input )
     part_two( inputTwo )
