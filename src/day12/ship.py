@@ -1,7 +1,7 @@
 from direction import Direction
 import re 
 
-class ship : 
+class Ship : 
 
 
     def __init__( self, start_position ) :
