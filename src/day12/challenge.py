@@ -1,11 +1,8 @@
 from ship import Ship
 from shipTwo import ShipTwo
 
-def part_one() : 
-    a_file     = open( "src/day12/puzzleInput.txt" )
-    directions = a_file.read().splitlines()
+def part_one( directions ) : 
     ship_val   = Ship( [0, 0] )
-    a_file.close()
 
     for direction in directions : 
         ship_val.update_position( direction )
@@ -13,11 +10,8 @@ def part_one() :
     print( "Part One: ", ship_val.manhattan_distance() )
 
 
-def part_two() : 
-    a_file     = open( "src/day12/puzzleInput.txt" )
-    directions = a_file.read().splitlines()
+def part_two( directions ) : 
     ship_val   = ShipTwo( [0, 0], [ 10, -1 ] )
-    a_file.close()
 
     for direction in directions : 
         ship_val.update_position( direction )
@@ -26,8 +20,12 @@ def part_two() :
     
 
 def main() :
-    part_one()
-    part_two()
+    a_file     = open( "src/day12/puzzleInput.txt" )
+    directions = a_file.read().splitlines()
+    a_file.close()
+
+    part_one( directions )
+    part_two( directions )
 
 
 if __name__ == '__main__' :
