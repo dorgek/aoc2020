@@ -18,7 +18,7 @@ def part_one( data_input, i ) :
     print( "Part One: ", data_input[-1] )
 
 def main() :
-    a_file      = open( "src/day15/testInput.txt" )
+    a_file      = open( "src/day15/puzzleInput.txt" )
     data_input  = [ int( a ) for a in a_file.read().split( "," ) ]
     a_file.close()
 
