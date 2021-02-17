@@ -1,5 +1,5 @@
 import numpy as np
-
+from itertools import product
 
 
 class ConwaysGame3D : 
@@ -10,19 +10,16 @@ class ConwaysGame3D :
             of the space is infinite
         """
         self._map = np.array( initial_state, copy=True )
-        self._map = np.pad( initial_state, (50, 50), 'constant' )
-        self._map = np.reshape( self._map, ( 1, 108, 108 ) )
+        self._map = np.pad( initial_state, 1, 'constant' )
+        self._map = np.reshape( self._map, np.insert( self._map.shape, 0, 1 ) )
 
         temp = self._map.shape
-
-        # zeros = np.zeros( self._map.shape )
-        # zerosTwo = np.zeros( self._map.shape )
-        # zerosthree = np.zeros( self._map.shape )
-        # temp  = np.zeros( self._map.shape )
         
-        for i in range( 0, 25 ) :
-            self._map = np.insert( self._map, 0, np.zeros( temp ), axis=0 )
-            self._map = np.append( self._map, np.zeros( temp ), axis=0 )
+        
+        self._map = np.insert( self._map, 0, np.zeros( temp ), axis=0 )
+        self._map = np.append( self._map, np.zeros( temp ), axis=0 )
+
+        self._map = np.pad( self._map, 1, 'constant' )
 
         self._size = self._map.shape
         
@@ -30,6 +27,7 @@ class ConwaysGame3D :
     
     def update( self ) :
         updates = []
+        pad = False 
 
         for z in range( 1, self._size[0] - 1 ) :
             # z axis 
@@ -39,12 +37,19 @@ class ConwaysGame3D :
 
                 for y in range( 1, self._size[2] - 1 ) :
                     # y axis 
-                    updates.append( [self._next_state(z, x, y), z, x, y])
+                    next_state = self._next_state( z, x, y )
+                    updates.append( [next_state, z, x, y])
 
-        
+                    if next_state == 1 and ( ( z == 1 or z == self._size[0] - 2 ) or ( x == 1 or x == self._size[1] - 2 ) or ( y == 1 or y == self._size[2] - 2 ) ) :
+                        pad = True 
+
         # update the map 
         for update in updates :
             self._map[update[1], update[2], update[3]] = update[0]
+        
+        if pad :
+            self._map = np.pad( self._map, 1, 'constant' )
+            self._size = self._map.shape
             
             
 
@@ -61,33 +66,13 @@ class ConwaysGame3D :
             check the neighbours of the current position to determine if 
             the next state should be active or inactive
         """
-        neighbours = [] 
-        neighbours.append([z-1, x, y])
-        neighbours.append([z-1, x-1, y])
-        neighbours.append([z-1, x, y-1])
-        neighbours.append([z-1, x-1, y-1])
-        neighbours.append([z-1, x+1, y])
-        neighbours.append([z-1, x, y+1])
-        neighbours.append([z-1, x+1, y+1])
-        neighbours.append([z-1, x+1, y-1])
-        neighbours.append([z-1, x-1, y+1])
-        neighbours.append([z, x-1, y])
-        neighbours.append([z, x, y-1])
-        neighbours.append([z, x-1, y-1])
-        neighbours.append([z, x+1, y])
-        neighbours.append([z, x, y+1])
-        neighbours.append([z, x+1, y+1])
-        neighbours.append([z, x+1, y-1])
-        neighbours.append([z, x-1, y+1])
-        neighbours.append([z+1, x, y])
-        neighbours.append([z+1, x-1, y])
-        neighbours.append([z+1, x, y-1])
-        neighbours.append([z+1, x-1, y-1])
-        neighbours.append([z+1, x+1, y])
-        neighbours.append([z+1, x, y+1])
-        neighbours.append([z+1, x+1, y+1])
-        neighbours.append([z+1, x+1, y-1])
-        neighbours.append([z+1, x-1, y+1])
+        neighbours = []
+
+        for z_i in range( z-1, z+2 ) :
+            for x_i in range( x-1, x+2 ) :
+                for y_i in range( y-1, y+2 ) :
+                    if z_i != z or x_i != x or y_i != y :
+                        neighbours.append( [z_i, x_i, y_i] )
 
         active = 0
         

@@ -1,4 +1,5 @@
 from ConwaysGame3D import ConwaysGame3D
+from ConwaysGame4D import ConwaysGame4D
 import numpy as np
 
 
@@ -6,11 +7,20 @@ def part_one( initial_state ) :
     game = ConwaysGame3D( initial_state )
 
     for i in range( 0, 6 ) :
-        print( i )
         game.update()
 
     print( "Part One: ", game.count_active() )
 
+
+def part_two( initial_state ) :
+    game = ConwaysGame4D( initial_state )
+
+    # game.print_map()
+
+    for i in range( 0, 6 ) :
+        game.update()
+
+    print( "Part Two: ", game.count_active() )
 
 
 def main() :
@@ -25,6 +35,7 @@ def main() :
     initial_state = np.matrix(temp)
 
     part_one( initial_state )
+    part_two( initial_state )
     
 
 
