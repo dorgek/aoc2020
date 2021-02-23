@@ -5,3 +5,5 @@ class Operators( Enum ) :
     MINUS = '-'
     DIVIDE = '/'
     MULTIPLY = '*'
+    OPEN_BRACKET = '('
+    CLOSE_BRACKET = ')'
