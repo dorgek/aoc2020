@@ -38,6 +38,31 @@ def check_valid_range( valid_ranges, val ) :
     return False 
 
 
+def part_two( input_data ) :
+        your_ticket = False
+    other_tickets = False  
+    valid_ranges = []
+    error_rate = 0
+    
+    for line in input_data :
+        if not your_ticket and not other_tickets :
+            valid_ranges.append( get_valid_rows( line ) )
+        elif ( your_ticket or other_tickets ) and ':' not in line : 
+
+            for val in line.split( ',' ) :
+                valid = check_valid_range( valid_ranges, int( val ) )
+
+                if not valid :
+                    error_rate += int( val )
+                    break
+                else :
+                    # identify which field 
+
+        if "your ticket" in line : 
+            your_ticket = True 
+        if "nearby tickets" in line :
+            your_ticket = False 
+            other_tickets = True
 
 
 def get_valid_rows( line ) :
@@ -49,10 +74,6 @@ def get_valid_rows( line ) :
 
     return ret
 
-
-    
-
-        
 
 
 
