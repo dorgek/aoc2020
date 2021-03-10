@@ -95,6 +95,9 @@ class Tile :
     def get_tile_num( self ) :
         return self._tile_num
 
+    def get_tile_no_boarder( self ) : 
+        return self._tile[1:-1,1:-1]
+
     def _get_tile( self, tile, i ) :
         edge_compare = []
 
