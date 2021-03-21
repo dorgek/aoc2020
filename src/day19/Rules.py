@@ -8,32 +8,36 @@ class Rules() :
 
     def process_rule( self, idx, vals ) :
         list_vals = list( split_after( vals, lambda x: x == '|') )
+        temp = ''
+        rule = []
 
         for list_val in list_vals : 
-            while " " in list_val :
-                list_val.remove( " " )
-            while "|" in list_val :
-                list_val.remove( "|" )
 
-        self._rule_dictionary[idx] = list_vals
+            temp = "".join( list_val )
+            temp = temp.replace( '|', '')
+            temp = temp.split()
+
+            rule.append( temp )
+            
+        self._rule_dictionary[idx] = rule
 
     def validate_sequence( self, sequence ) : 
-        print('help')
-        checked = self._validate_rule_seq( self._rule_dictionary[0][0], sequence, 0 )
-        
+        # print( self._rule_dictionary[0] )
+
+        checked = self._validate_rule_seq( self._rule_dictionary[0][0], sequence, 0 )      
+
 
         if checked > 0 and len( sequence ) == checked :
             return True 
         else :
             return False 
 
-        
-
 
     
     def _validate_rule_seq( self, rule_seq, sequence, seq_idx ) : 
-        # self.glb_idx += 1
-        # print( self.glb_idx )
+        self.glb_idx += 1
+
+        # print( self.glb_idx, ' ', rule_seq )
         
         for next_rule_idx in rule_seq :
             next_val = self._rule_dictionary[int(next_rule_idx)]

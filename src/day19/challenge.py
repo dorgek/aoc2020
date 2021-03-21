@@ -21,10 +21,9 @@ def part_one( data_input ) :
         
         rule.process_rule( int( rule_idx ), rule_val )
 
-    print('1')
 
     for sequence in sequences : 
-        print(total_passed)
+        # print(total_passed)
         if rule.validate_sequence( sequence ) :
             total_passed += 1
     
@@ -46,9 +45,10 @@ def main() :
 
 
 if __name__ == '__main__' :
-    threading.stack_size(200000000)
-    resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
-    sys.setrecursionlimit(2 ** 30 )
+    # threading.stack_size(8500000000)
+    # resource.setrlimit(resource.RLIMIT_STACK, (2**45,-1))
+    # sys.setrecursionlimit(2 ** 30)
 
-    thread = threading.Thread(target=main)
-    thread.start()
+    # thread = threading.Thread(target=main)
+    # thread.start()
+    main()
